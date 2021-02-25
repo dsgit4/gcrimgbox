@@ -1,9 +1,0 @@
-service: gcptileserver
-runtime: java11
-entrypoint: 'java -jar tileservice-2.0.0.jar'
-instance_class: F2
-
-#system-properties:
-  #java.util.logging.config.file: "WEB-INF/logging.properties"
-env_variables:
-  JAVA_USER_OPTS: -Djava.util.logging.config.file="WEB-INF/logging.properties"
