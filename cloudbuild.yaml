@@ -1,0 +1,33 @@
+steps:
+  - id: Build and Test with Maven
+    name: 'gcr.io/cloud-builders/mvn'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        mvn package || echo "fail" > /workspace/build-status.txt
+  - id: Bubble Maven result
+    name: 'gcr.io/cloud-builders/mvn'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [[ $(< /workspace/build-status.txt) == "fail" ]]; then
+          exit 1
+        fi
+  - name: 'ubuntu'
+    args: ['mkdir', 'deploy-build']
+  - name: 'ubuntu'
+    args: ['cp', 'src/main/appengine/app.yaml', 'deploy-build/']
+  - name: 'ubuntu'
+    args: ['cp', '/workspace/target/tileservice-2.0.0.jar', 'deploy-build/']
+  - id: "Deploy to AppEngine"
+    name: 'gcr.io/cloud-builders/gcloud'
+    args: ['app', 'deploy', 'deploy-build/']
+
+ # - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:alpine"
+ #   args: ["app", "deploy"]
+ # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+ #   entrypoint: gcloud
+ #   args: ["app", "deploy"]
+timeout: "1600s"
