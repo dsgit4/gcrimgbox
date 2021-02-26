@@ -137,6 +137,16 @@
       <artifactId>jetty-client</artifactId>
       <version>9.4.33.v20201020</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>jetty-http</artifactId>
+          <groupId>org.eclipse.jetty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jetty-io</artifactId>
+          <groupId>org.eclipse.jetty</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
   <properties>
