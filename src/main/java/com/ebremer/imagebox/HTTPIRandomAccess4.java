@@ -70,7 +70,8 @@ public class HTTPIRandomAccess4 implements IRandomAccess {
         tm = new TreeMap<>();
         this.url = url;
         if (httpClient == null) {
-            SslContextFactory sslContextFactory = new SslContextFactory();
+          SslContextFactory sslContextFactory = new SslContextFactory();
+
             httpClient = new HttpClient(sslContextFactory);
             httpClient.setFollowRedirects(true);   
             try {
