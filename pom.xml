@@ -4,7 +4,7 @@
     <groupId>com.ebremer</groupId>
     <artifactId>gcr-imagebox</artifactId>
     <version>2.0.0</version>
-   <!-- <packaging>jar</packaging>-->
+    <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
