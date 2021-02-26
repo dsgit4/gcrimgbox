@@ -60,7 +60,7 @@
             <artifactId>jetty-servlet</artifactId>
             <version>9.4.33.v20201020</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
