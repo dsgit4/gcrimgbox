@@ -58,14 +58,17 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
-            <version>9.4.33.v20201020</version>
+            <version>9.4.36.v20210114</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-client</artifactId>
-            <version>9.4.33.v20201020</version>
+            <version>9.4.36.v20210114</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
-
         <!-- Embedded Jetty dependencies -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
