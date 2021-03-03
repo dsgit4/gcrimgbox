@@ -3,7 +3,7 @@ package com.ebremer.imagebox;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-
+import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.abs;
 import java.util.Hashtable;
@@ -60,7 +60,7 @@ public class NeoTiler {
     private long lastaccessed;
     private CoreMetadata big;
     private String url;
-    
+
     public NeoTiler(String f) {
         DebugTools.enableLogging("ERROR");
         lastaccessed = System.nanoTime();
@@ -82,7 +82,7 @@ public class NeoTiler {
                 break;
             case "tif":
                 reader = new TiffReader();
-                break;            
+                break;
             case "vsi":  // VSI will require more work.  It is broken at the moment
                 reader = new CellSensReader();
                 break;
@@ -166,31 +166,31 @@ public class NeoTiler {
             pi = null;
         }
     }
-    
+
     public void setURL(String r) {
         url = r;
     }
-    
+
     public int GetWidth() {
         return iWidth;
     }
-    
+
     public int GetHeight() {
         return iHeight;
-    }    
-    
+    }
+
     public boolean isBorked() {
         return borked;
     }
-    
+
     public String getStatus() {
         return status;
     }
-    
+
     public long GetLastAccess() {
         return lastaccessed;
     }
-    
+
     public void UpdateLastAccess() {
         lastaccessed = System.nanoTime();
     }
@@ -206,8 +206,8 @@ public class NeoTiler {
             }
             ii++;
         }
-    return maxseries;
-  }
+        return maxseries;
+    }
 
     public void SortImages() {
         boolean sorted = false;
@@ -229,7 +229,7 @@ public class NeoTiler {
             }
         }
     }
-/*    
+/*
     public String GetImageInfo() {
         Model m = ModelFactory.createDefaultModel();
         if (borked) {
@@ -240,7 +240,6 @@ public class NeoTiler {
             m.addLiteral(m.createResource("http://www.ebremer.com/a"), m.createProperty("http://www.w3.org/2003/12/exif/ns#xResolution"), Math.round(10000/mppx));
             m.addLiteral(m.createResource("http://www.ebremer.com/a"), m.createProperty("http://www.w3.org/2003/12/exif/ns#yResolution"), Math.round(10000/mppy));
             m.addLiteral(m.createResource("http://www.ebremer.com/a"), m.createProperty("http://www.w3.org/2003/12/exif/ns#resolutionUnit"), 3);
-
             for (int j=0;j<px.length;j++) {
                 System.out.println(j+" >>> "+px[j]+","+py[j]+" aspect ratio : "+pr[j]);
                 m.add(m.createResource("http://www.ebremer.com/a"), m.createProperty("http://iiif.io/api/image/2#sizes"), m.createResource("http://www.ebremer.com/"+j));
@@ -262,7 +261,7 @@ public class NeoTiler {
         return out.toString();
     }
 */
-        
+
     public String GetImageInfo() {
         System.out.println(url);
         JsonBuilderFactory jbf = Json.createBuilderFactory(null);
@@ -274,7 +273,7 @@ public class NeoTiler {
                 .add("xResolution", Math.round(10000/mppx))
                 .add("yResolution", Math.round(10000/mppx))
                 .add("resolutionUnit", 3);
-        
+
         JsonArrayBuilder sizes = jbf.createArrayBuilder();
         JsonArrayBuilder scalefactors = jbf.createArrayBuilder();
         /*
@@ -285,12 +284,12 @@ public class NeoTiler {
         for (int j=clip-1;j>=0;j--) {
             sizes.add(jbf.createObjectBuilder().add("width", px[j]).add("height", py[j]));
         }*/
-        
+
         int clip = Math.max(iWidth, iHeight);
         clip = (int) Math.ceil(Math.log(clip)/Math.log(2));
         clip = clip - (int) (Math.ceil(Math.log(Math.max(reader.getOptimalTileHeight(), reader.getOptimalTileWidth()))/Math.log(2)));
         for (int j=0;j<clip;j++) {
-            int pow = (int) Math.pow(2, j);
+            int pow = (int) Math.pow(4, j);
             scalefactors.add(pow);
         }
         for (int j=clip-1;j>=0;j--) {
@@ -320,18 +319,18 @@ public class NeoTiler {
                 .add("gray")
                 .add("color");
         profile.add("http://iiif.io/api/image/2/level2.json")
-               .add(jbf.createObjectBuilder()
+                .add(jbf.createObjectBuilder()
                         .add("supports", supports)
                         .add("formats", formats)
                         .add("qualities", qualities));
         JsonArrayBuilder tiles = jbf.createArrayBuilder().add(jbf.createObjectBuilder()
-                                                                .add("width", reader.getOptimalTileWidth())
-                                                                .add("height", reader.getOptimalTileHeight())
-                                                                .add("scaleFactors", scalefactors));
+                .add("width", reader.getOptimalTileWidth())
+                .add("height", reader.getOptimalTileHeight())
+                .add("scaleFactors", scalefactors));
         value.add("protocol","http://iiif.io/api/image").add("profile", profile).add("tiles", tiles);
         return value.build().toString();
     }
-    
+
     public BufferedImage FetchImage(int x, int y, int w, int h, int tx, int ty, String type) {
         //System.out.println("FetchImage : "+x+" "+y+" "+w+" "+h+" "+tx+" "+ty);
         int iratio = w/tx;
@@ -342,12 +341,12 @@ public class NeoTiler {
         }
         //System.out.println("setting series to : "+pi[jj]);
         double rr = 0;
-     //   if (type.equals("svs")) {
-       // 	SReader.setSeries(pi[jj]);
-        //	rr = ((double) SReader.getSizeX())/((double) iWidth);        	
-       // } else if (type.equals("ndpi")) {
-        	reader.setSeries(pi[jj]);
-        	rr = ((double) reader.getSizeX())/((double) iWidth);
+        //   if (type.equals("svs")) {
+        // 	SReader.setSeries(pi[jj]);
+        //	rr = ((double) SReader.getSizeX())/((double) iWidth);
+        // } else if (type.equals("ndpi")) {
+        reader.setSeries(pi[jj]);
+        rr = ((double) reader.getSizeX())/((double) iWidth);
         //}
         int gx=(int) (x*rr);
         int gy=(int) (y*rr);
@@ -364,7 +363,7 @@ public class NeoTiler {
         scaleOp.filter(bi, target);
         return target;
     }
-    
+
     private BufferedImage GrabImage(int xpos, int ypos, int width, int height, String type) {
         //System.out.println("grab image : "+xpos+ " "+ypos+" "+width+" "+height+"=== "+type);
         meta.setRoot(newRoot);
@@ -378,11 +377,11 @@ public class NeoTiler {
             buf = reader.openBytes(0, xpos, ypos, width, height);
             //System.out.println("image is "+(buf==null));
             bb = AWTImageTools.makeImage(buf, reader.isInterleaved(), meta, 0);
-           // }
+            // }
         } catch (FormatException | IOException ex) {
             System.out.println("I'm dying....ERROR");
             Logger.getLogger(NeoTiler.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         return bb;
     }
 }
