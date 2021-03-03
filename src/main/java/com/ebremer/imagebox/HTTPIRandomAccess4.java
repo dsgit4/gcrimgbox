@@ -5,14 +5,13 @@
 
 package com.ebremer.imagebox;
 
-import java.awt.image.BufferedImage;
+
 import java.io.EOFException;
-import java.io.File;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.Random;
 import java.util.TreeMap;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -20,26 +19,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+
 import loci.common.ByteArrayHandle;
 import loci.common.IRandomAccess;
-import loci.common.Location;
-import loci.common.services.DependencyException;
-import loci.common.services.ServiceException;
-import loci.common.services.ServiceFactory;
-import loci.formats.CoreMetadata;
-import loci.formats.FormatException;
-import loci.formats.IFormatReader;
-import loci.formats.MissingLibraryException;
-import loci.formats.gui.AWTImageTools;
-import loci.formats.in.SVSReader;
-import loci.formats.meta.IMetadata;
-import loci.formats.meta.MetadataStore;
-import loci.formats.services.OMEXMLService;
-import loci.formats.services.OMEXMLServiceImpl;
-import ome.xml.meta.OMEXMLMetadataRoot;
-import ome.xml.model.Image;
-import ome.xml.model.primitives.PositiveInteger;
 
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.Response;

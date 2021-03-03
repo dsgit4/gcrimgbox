@@ -3,7 +3,7 @@ package com.ebremer.imagebox;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
+
 import java.io.IOException;
 import static java.lang.Math.abs;
 import java.util.Hashtable;
