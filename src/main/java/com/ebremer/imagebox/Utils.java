@@ -3,9 +3,14 @@ package com.ebremer.imagebox;
 /**Class with utility methods*/
 public class Utils {
 
-    public static boolean isblackListed(String iiif){
+    public static String isblackListed(String iiif){
+        String msg="";
         String blackListedUrls = System.getenv("blackListed");
-          return blackListedUrls.contains(iiif);
 
+         if(blackListedUrls.contains(iiif))
+         {msg = "Image url contains restricted domain name.";}
+
+        return msg;
       }
+
 }

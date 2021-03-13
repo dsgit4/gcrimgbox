@@ -50,8 +50,8 @@ public class iboxServlet extends HttpServlet {
             try {
 
                 i = new IIIF(iiif);
-               if(Utils.isblackListed(iiif))
-               { System.out.println(" Image url contains restricted domain name.");
+               if(! Utils.isblackListed(iiif).isEmpty())
+               {
                    PrintWriter writer=response.getWriter();
                    writer.println("Please check parameter 'iiif', if it is null or Image url contains restricted domain name.");
                 }
