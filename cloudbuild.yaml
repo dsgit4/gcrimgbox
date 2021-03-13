@@ -1,5 +1,5 @@
 steps:
   - name: gcr.io/cloud-builders/mvn
     id: build
-    args: ['clean', 'install', 'jib:build', '-Dimage=gcr.io/nih-test/imagebox-demo']
+    args: ['clean', 'install', 'jib:build', '-Dimage=gcr.io/nih-test/imagebox-env']
 timeout: "1600s"

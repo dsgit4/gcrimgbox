@@ -34,10 +34,14 @@ public class IIIF {
     public ImageFormat imageformat;
 
     IIIF(String url) throws URISyntaxException {
+//        System.out.println("1. url "+ url);
         matcher = PATTERN1.matcher(url);
         if (matcher.find()) {
             tilerequest = true;
             uri = new URI(matcher.group(1));
+//            System.out.println("2. uri: "+uri);
+
+
             x = Integer.parseInt(matcher.group(2));
             y = Integer.parseInt(matcher.group(3));
             w = Integer.parseInt(matcher.group(4));

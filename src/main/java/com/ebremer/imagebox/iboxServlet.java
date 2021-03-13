@@ -40,7 +40,7 @@ public class iboxServlet extends HttpServlet {
     
     @Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        System.out.println("1. Entering....App");
+ //       System.out.println("1. Entering....App");
 
         String iiif = request.getParameter("iiif");
        System.out.println("2.request param iiif is: "+iiif);
@@ -48,6 +48,7 @@ public class iboxServlet extends HttpServlet {
             IIIF i = null;
             try {
                 i = new IIIF(iiif);
+                Utils.isblackListed(iiif);
             } catch (URISyntaxException ex) {
                 Logger.getLogger(iboxServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
