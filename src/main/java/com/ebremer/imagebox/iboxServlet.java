@@ -50,11 +50,23 @@ public class iboxServlet extends HttpServlet {
             try {
 
                 i = new IIIF(iiif);
-               if(! Utils.isblackListed(iiif).isEmpty())
+                String msg= Utils.isblackListed(iiif);
+               if(! msg.isEmpty())
                {
+                   response.setContentType("text/html");
+                   String docType =
+                           "<!doctype html public \"-//w3c//dtd html 4.0 " + "transitional//en\">\n";
                    System.out.println("isblackListed done. ");
-                   PrintWriter writer=response.getWriter();
-                   writer.println("Please check parameter 'iiif', if it is null or Image url contains restricted domain name.");
+                   PrintWriter out=response.getWriter();
+                   out.println(docType +
+                                   "<html>\n" +
+                                   "<body bgcolor = \"#f0f0f0\">\n" +
+                                   "  <li><b>blackURLS</b>: "
+                                     + msg + "\n" +
+                                   "\" Please check parameter 'iiif', if it is null or Image url contains restricted domain name.\"</ul>\n" +
+                                   "</body>" +
+                                   "</html>"
+                           );
                 }
             } catch (URISyntaxException ex) {
                 Logger.getLogger(iboxServlet.class.getName()).log(Level.SEVERE, ex.getMessage());
