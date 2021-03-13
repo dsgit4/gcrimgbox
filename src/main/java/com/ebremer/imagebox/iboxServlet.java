@@ -46,14 +46,17 @@ public class iboxServlet extends HttpServlet {
        System.out.println("2.request param iiif is: "+iiif);
         if (iiif!=null) {
             IIIF i = null;
-            String msg = "";
+
             try {
 
                 i = new IIIF(iiif);
-               if(Utils.isblackListed(iiif) == true);
-                { msg = "Image url contains restricted domain name.";}
+               if(Utils.isblackListed(iiif))
+               { System.out.println(" Image url contains restricted domain name.");
+                   PrintWriter writer=response.getWriter();
+                   writer.println("Please check parameter 'iiif', if it is null or Image url contains restricted domain name.");
+                }
             } catch (URISyntaxException ex) {
-                Logger.getLogger(iboxServlet.class.getName()).log(Level.SEVERE, msg, ex.getMessage());
+                Logger.getLogger(iboxServlet.class.getName()).log(Level.SEVERE, ex.getMessage());
             }
             NeoTiler nt = null;
             String target = null;
