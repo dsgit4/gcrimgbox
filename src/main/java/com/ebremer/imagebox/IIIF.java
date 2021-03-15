@@ -39,9 +39,6 @@ public class IIIF {
         if (matcher.find()) {
             tilerequest = true;
             uri = new URI(matcher.group(1));
-//            System.out.println("2. uri: "+uri);
-
-
             x = Integer.parseInt(matcher.group(2));
             y = Integer.parseInt(matcher.group(3));
             w = Integer.parseInt(matcher.group(4));

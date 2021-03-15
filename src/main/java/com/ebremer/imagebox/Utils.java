@@ -6,17 +6,17 @@ import java.util.List;
 /**Class with utility methods*/
 public class Utils {
 
-    public static String isblackListed(String iiif){
+    public static String isWhiteListed(String iiif){
         String msg="";
-        System.out.println("1. isblackListed: "+iiif);
-        String blackListedUrls = System.getenv("blackListed");
-        List<String> blackList = Arrays.asList("abc.com, badguys.com, corruptimages.com, aws.com, s3.amazonaws.com".split(","));
+        System.out.println("Verify if domain in the parameter is one of the whiteListed Ones: ");
+        String whiteListedUrls = System.getenv("whiteListedUrls");
+        List<String> whiteListedDomainList = Arrays.asList(whiteListedUrls.split(","));
 
-        for (String blackUrl :blackList ){
-       //     System.out.println("2. ");
-            if(iiif.contains(blackUrl.trim())) {
-                msg = blackUrl;
-                System.out.println("blackUrl- " + blackUrl);
+        for (String whiteURL :whiteListedDomainList ){
+           // System.out.println("1. whiteURL- " + whiteURL);
+            if (iiif.startsWith(whiteURL.trim())){
+                msg = whiteURL;
+          //  System.out.println(" match from param and whiteListed :) ");
             }
         }
         return msg;

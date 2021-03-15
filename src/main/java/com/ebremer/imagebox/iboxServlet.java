@@ -10,7 +10,6 @@ import java.net.URISyntaxException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.IIOImage;
@@ -46,24 +45,21 @@ public class iboxServlet extends HttpServlet {
        System.out.println("2.request param iiif is: "+iiif);
         if (iiif!=null) {
             IIIF i = null;
-
-            try {
-
-                i = new IIIF(iiif);
-                String msg= Utils.isblackListed(iiif);
-               if(! msg.isEmpty())
+          try {
+            i = new IIIF(iiif);
+            String whiteListed= Utils.isWhiteListed(iiif);
+            if(whiteListed.isEmpty())
                {
                    response.setContentType("text/html");
                    String docType =
                            "<!doctype html public \"-//w3c//dtd html 4.0 " + "transitional//en\">\n";
-                   System.out.println("isblackListed done. ");
+                   System.out.println("whiteListed check done. ");
                    PrintWriter out=response.getWriter();
                    out.println(docType +
                                    "<html>\n" +
                                    "<body bgcolor = \"#f0f0f0\">\n" +
-                                   "  <li><b>blackURLS</b>: "
-                                     + msg + "\n" +
-                                   "\" Please check parameter 'iiif', if it is null or Image url contains restricted domain name.\"</ul>\n" +
+                                   "  <li><b>blackURLS</b>: " +
+                                   "\" Please check parameter 'iiif', if it is null or url to image contains restricted domain name.\"</ul>\n" +
                                    "</body>" +
                                    "</html>"
                            );
