@@ -51,10 +51,9 @@ public class iboxServlet extends HttpServlet {
             if(whiteListed.isEmpty())
                {
                    response.setContentType("text/html");
-                   System.out.println("WhiteListed check done.");
-                   PrintWriter out=response.getWriter();
-                   out.println("Please check parameter 'iiif', if it is null or url to the slide is not a whitelisted domain."
-                           );
+                   Logger.getLogger(iboxServlet.class.getName()).log(Level.INFO,"WhiteListed check done." +
+                           "\n Please check in the parameter 'iiif', URL to the slide should be whitelisted.");
+
                 }
             } catch (URISyntaxException ex) {
                 Logger.getLogger(iboxServlet.class.getName()).log(Level.SEVERE, ex.getMessage());
