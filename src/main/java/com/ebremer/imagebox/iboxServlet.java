@@ -42,7 +42,7 @@ public class iboxServlet extends HttpServlet {
  //       System.out.println("1. Entering....App");
 
         String iiif = request.getParameter("iiif");
-       System.out.println("2.request param iiif is: "+iiif);
+ //      System.out.println("2.request param iiif is: "+iiif);
         if (iiif!=null) {
             IIIF i = null;
           try {
@@ -51,6 +51,10 @@ public class iboxServlet extends HttpServlet {
             if(whiteListed.isEmpty())
                {
                    response.setContentType("text/html");
+                   PrintWriter out = response.getWriter();
+                   out.println("WhiteListed check done." +
+                           "\n Please check in the parameter 'iiif', URL to the slide should be whitelisted.");
+
                    Logger.getLogger(iboxServlet.class.getName()).log(Level.INFO,"WhiteListed check done." +
                            "\n Please check in the parameter 'iiif', URL to the slide should be whitelisted.");
 

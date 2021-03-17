@@ -9,7 +9,7 @@ public class Utils {
 
     public static String isWhiteListed(String iiif){
         String msg="";
-        Logger.getLogger(Utils.class.getName()).log(Level.INFO,"Verify if domain in the parameter is " +
+        Logger.getLogger(Utils.class.getName()).log(Level.INFO,"Verifying if the domain in the parameter is " +
                 "one of the whiteListed Ones...");
         String whiteListedUrls = System.getenv("whiteListedUrls");
         List<String> whiteListedDomainsList = Arrays.asList(whiteListedUrls.split(","));
@@ -19,7 +19,7 @@ public class Utils {
             if (iiif.trim().startsWith(whiteURL.trim())){
                 msg = whiteURL;
                 Logger.getLogger(Utils.class.getName()).log(Level.INFO,
-                        whiteURL+ "  [param starts with whitelisted one.]) ");
+                        whiteURL+ "  [ param starts with whitelisted one.]) ");
             }
         }
 //        if(msg.isEmpty()){
