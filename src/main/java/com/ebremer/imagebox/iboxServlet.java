@@ -46,7 +46,6 @@ public class iboxServlet extends HttpServlet {
         if (iiif!=null) {
             IIIF i = null;
           try {
-            i = new IIIF(iiif);
             String whiteListed= Utils.isWhiteListed(iiif);
             if(whiteListed.isEmpty())
                {
@@ -57,11 +56,15 @@ public class iboxServlet extends HttpServlet {
 
                    Logger.getLogger(iboxServlet.class.getName()).log(Level.INFO,"WhiteListed check done." +
                            "\n Please check in the parameter 'iiif', URL to the slide should be whitelisted.");
-
                 }
-            } catch (URISyntaxException ex) {
+             } catch (Exception ex) {
                 Logger.getLogger(iboxServlet.class.getName()).log(Level.SEVERE, ex.getMessage());
             }
+          try{
+              i = new IIIF(iiif);
+             }catch (URISyntaxException ex) {
+                Logger.getLogger(iboxServlet.class.getName()).log(Level.SEVERE, ex.getMessage());
+             }
             NeoTiler nt = null;
             String target = null;
             if (i.uri.getScheme()==null) {
